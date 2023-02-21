@@ -13,6 +13,12 @@ import AboutScreen from "./AboutScreen";
 import ContactScreen from "./ContactScreen";
 import { Icon } from "react-native-elements";
 import logo from '../assets/images/logo.png';
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchPartners } from "../features/partners/partnersSlice";
+import { fetchCampsites } from "../features/campsites/campsitesSlice";
+import { fetchPromotions } from "../features/promotions/promotionsSlice";
+import { fetchComments } from "../features/comments/commentsSlice";
 
 const Drawer = createDrawerNavigator();
 
@@ -143,27 +149,83 @@ const CustomDrawerContent = (props) => (
 );
 
 const Main = () => {
-  return (
-    <View
-      style={{
-        flex: 1,
-        paddingTop: 
-            Platform.OS === "ios" ? 0 : Constants.statusBarHeight
-      }}
-    >
-        <Drawer.Navigator
-            initialRouteName='Home'
-            drawerContent={CustomDrawerContent}
-            drawerStyle={{ backgroundColor: '#CEC8FF' }}
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchCampsites());
+        dispatch(fetchPromotions());
+        dispatch(fetchPartners());
+        dispatch(fetchComments());
+    }, [dispatch]);
+
+    return (
+        <View
+        style={{
+            flex: 1,
+            paddingTop: 
+                Platform.OS === "ios" ? 0 : Constants.statusBarHeight
+        }}
         >
-            <Drawer.Screen 
-                name='Home'
-                component={HomeNavigator}
-                options={{ 
-                    title: 'Home',
+            <Drawer.Navigator
+                initialRouteName='Home'
+                drawerContent={CustomDrawerContent}
+                drawerStyle={{ backgroundColor: '#CEC8FF' }}
+            >
+                <Drawer.Screen 
+                    name='Home'
+                    component={HomeNavigator}
+                    options={{ 
+                        title: 'Home',
+                        drawerIcon: ({ color }) => (
+                            <Icon 
+                                name='home'
+                                type='font-awesome'
+                                size={24}
+                                iconStyle={{ width: 24 }}
+                                color={color}
+                            />
+                        )
+                    }}
+                />
+                <Drawer.Screen 
+                    name='Directory'
+                    component={DirectoryNavigator}
+                    options={{ 
+                        title: 'Campsite Directory',
+                        drawerIcon: ({ color }) => (
+                            <Icon 
+                                name='list'
+                                type='font-awesome'
+                                size={24}
+                                iconStyle={{ width: 24 }}
+                                color={color}
+                            />
+                        )
+                    }}
+                />
+                <Drawer.Screen 
+                    name='About'
+                    component={AboutNavigator}
+                    options={{
+                        title: 'About',
+                        drawerIcon: ({ color }) => (
+                            <Icon 
+                                name='info-circle'
+                                type='font-awesome'
+                                size={24}
+                                iconStyle={{ width: 24 }}
+                                color={color}
+                            />
+                        )
+                    }}
+                />
+                <Drawer.Screen 
+                    name='Contact'
+                    component={ContactNavigator}
+                    options={{ title: 'Contact Us',
                     drawerIcon: ({ color }) => (
                         <Icon 
-                            name='home'
+                            name='address-card'
                             type='font-awesome'
                             size={24}
                             iconStyle={{ width: 24 }}
@@ -171,56 +233,9 @@ const Main = () => {
                         />
                     )
                 }}
-            />
-            <Drawer.Screen 
-                name='Directory'
-                component={DirectoryNavigator}
-                options={{ 
-                    title: 'Campsite Directory',
-                    drawerIcon: ({ color }) => (
-                        <Icon 
-                            name='list'
-                            type='font-awesome'
-                            size={24}
-                            iconStyle={{ width: 24 }}
-                            color={color}
-                        />
-                    )
-                }}
-            />
-            <Drawer.Screen 
-                name='About'
-                component={AboutNavigator}
-                options={{
-                    title: 'About',
-                    drawerIcon: ({ color }) => (
-                        <Icon 
-                            name='info-circle'
-                            type='font-awesome'
-                            size={24}
-                            iconStyle={{ width: 24 }}
-                            color={color}
-                        />
-                    )
-                }}
-            />
-            <Drawer.Screen 
-                name='Contact'
-                component={ContactNavigator}
-                options={{ title: 'Contact Us',
-                drawerIcon: ({ color }) => (
-                    <Icon 
-                        name='address-card'
-                        type='font-awesome'
-                        size={24}
-                        iconStyle={{ width: 24 }}
-                        color={color}
-                    />
-                )
-            }}
-            />
-        </Drawer.Navigator>
-    </View>
+                />
+            </Drawer.Navigator>
+        </View>
   );
 };
 
