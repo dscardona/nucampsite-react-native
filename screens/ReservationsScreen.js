@@ -16,7 +16,9 @@ function ReservationScreen () {
     };
 
     const handleReservation = () => {
-        console.log(campers, hikeIn, date);
+        console.log('campers:', campers);
+        console.log('hikeIn:', hikeIn);
+        console.log('date:', date);
         setCampers(1);
         setHikeIn(false);
         setDate(new Date());
