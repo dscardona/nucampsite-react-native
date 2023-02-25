@@ -32,7 +32,7 @@ const RenderCampsite = (props) => {
                     <Icon 
                         name={'pencil'}
                         type='font-awesome'
-                        color='#f50'
+                        color='#5637DD'
                         raised
                         reverse
                         onPress={() => props.onShowModal()}
