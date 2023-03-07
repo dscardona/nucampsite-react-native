@@ -93,7 +93,7 @@ function ReservationScreen () {
                 <Button
                     onPress={() => Alert.alert(
                         'Begin Search?',
-                        '\n\nNumber of campers: ' + campers +
+                        'Number of campers: ' + campers +
                         '\n\nHike-In?: ' + (hikeIn ? 'Yes' : 'No') +
                         '\n\nDate: ' + date.toLocaleDateString('en-US'),
                         [
