@@ -1,4 +1,12 @@
-import { Image, Text, Platform, View, StyleSheet } from "react-native";
+import {
+  Image,
+  Text,
+  Platform,
+  View,
+  StyleSheet,
+  Alert,
+  ToastAndroid,
+} from "react-native";
 import CampsiteInfoScreen from "./CampsiteInfoScreen";
 import DirectoryScreen from "./DirectoryScreen";
 import Constants from "expo-constants";
@@ -23,6 +31,7 @@ import { fetchComments } from "../features/comments/commentsSlice";
 import FavoritesScreen from "./FavoritesScreen";
 import LoginScreen from "./LoginScreen";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/core";
+import NetInfo from "@react-native-community/netinfo";
 
 const Drawer = createDrawerNavigator();
 
@@ -225,6 +234,17 @@ const Main = () => {
     dispatch(fetchPartners());
     dispatch(fetchComments());
   }, [dispatch]);
+
+  useEffect(() => {
+    NetInfo.fetch().then((connectionInfo) => {
+      Platform.OS === "ios"
+        ? Alert.alert("Initial Network Connectivity Type:", connectionInfo.type)
+        : ToastAndroid.show(
+            "Initial Network Connectivity Type: " + connectionInfo.type,
+            ToastAndroid.LONG
+          );
+    });
+  }, []);
 
   return (
     <View
