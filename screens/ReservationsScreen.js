@@ -127,7 +127,10 @@ function ReservationScreen() {
                   {
                     text: "Cancel",
                     style: "cancel",
-                    onPress: () => console.log("Search aborted"),
+                    onPress: () => {
+                      console.log("Search aborted");
+                      resetForm();
+                    },
                   },
                   {
                     text: "OK",
